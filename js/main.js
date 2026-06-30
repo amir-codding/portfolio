@@ -39,22 +39,24 @@ function type() {
 
 type();
 // skills animatiom
+const fills = document.querySelectorAll(".level");
 
-const fills = document.querySelectorAll(".progress-fill");
 const skillObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       const el = entry.target;
-      const value = el.getAttribute("data-width");
+      const value = el.getAttribute("data-percent");
       el.style.width = value + "%";
     }
   });
-
 }, {
   threshold: 0.5
 });
 
-fills.forEach((el) => skillObserver.observe(el));
+fills.forEach((el) => {
+  el.style.width = "0%"; // شروع از صفر
+  skillObserver.observe(el);
+});
 
 // hambergery
 

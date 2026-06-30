@@ -417,8 +417,10 @@ body::before {
 
 .level {
   height: 100%;
-  background: linear-gradient(90deg, var(--bg-main), var(--primary-soft));
+  width: 0;
+  background: var(--primary-light);
   border-radius: 20px;
+  transition: width 1s ease;
 }
 .html {
   width: 90%;
