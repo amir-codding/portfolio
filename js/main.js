@@ -85,3 +85,36 @@ overlay.addEventListener("click", closeMenu);
 document.querySelectorAll(".mobile-menu a").forEach(a=>{
   a.addEventListener("click", closeMenu);
 });
+// این کد رو به فایل js/main.js اضافه کن (یا با یه <script> جدا لینکش کن)
+// فقط مطمئن شو که قبل از این کد، اسکریپت EmailJS CDN توی HTML لود شده:
+// <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+(function () {
+  emailjs.init("neOMlnopv8_rDo560"); // Public Key
+
+  const contactForm = document.getElementById('contactForm');
+
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'در حال ارسال...';
+    submitBtn.disabled = true;
+
+    emailjs.sendForm('service_fsbb3op', 'template_caz5n3y', contactForm)
+      .then(function () {
+        submitBtn.textContent = 'ارسال شد ✓';
+        contactForm.reset();
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }, 3000);
+      })
+      .catch(function (error) {
+        submitBtn.textContent = 'خطا، دوباره تلاش کن';
+        submitBtn.disabled = false;
+        console.error('EmailJS error:', error);
+      });
+  });
+})();
